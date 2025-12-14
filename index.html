@@ -56,12 +56,14 @@
             flex-direction: column;
             justify-content: space-between;
             border: 1px solid var(--color-medium-grey);
-            transition: transform 0.2s ease-in-out;
+            /* Add Theme Tweak (3): Subtle hover effect */
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
         }
 
+        /* Theme Tweak (3): Hover effect */
         .bento-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
+            transform: scale(1.01); /* Subtle zoom effect */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
         .card-title {
@@ -84,7 +86,32 @@
             grid-column: span 2;
             grid-row: span 2;
             justify-content: flex-start;
+            
+            /* --- CORRECTED: Background Image Settings --- */
+            /* Added gradient overlay for text legibility over bg.jpg */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('bg.jpg'); 
+            background-size: cover;          
+            background-position: center;     
+            background-repeat: no-repeat;    
+            color: var(--color-white); /* Ensures main text is white */
         }
+
+        /* Adjust colors specifically for the profile card text/links */
+        .card-profile .profile-name {
+            color: var(--color-white);
+        }
+        .card-profile .card-subtitle, 
+        .card-profile .profile-info {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .card-profile .social-links a {
+            color: var(--color-white);
+            /* Removed border-bottom for cleaner look, you can add it back if preferred */
+        }
+        .card-profile .social-links a:hover {
+            color: #ffe066; /* Bright hover color */
+        }
+
         .profile-name {
             font-size: 2rem;
             font-weight: 900;
@@ -110,8 +137,9 @@
 
         /* Card 2 (Location): Small box (1x1) */
         .card-location {
-            grid-column: span 1;
-            grid-row: span 1;
+            /* Now placed top-right */
+            grid-column: 3 / span 1;
+            grid-row: 1 / span 1;
             background-color: var(--color-accent);
             color: var(--color-white);
             text-align: center;
@@ -127,34 +155,52 @@
 
         /* Card 3 (Tech Stack/Subjects): Medium box (1x1) */
         .card-subjects {
-            grid-column: span 1;
-            grid-row: span 1;
+            /* Now positioned below Location */
+            grid-column: 3 / span 1;
+            grid-row: 2 / span 1;
         }
 
         /* Card 4 (Case Study): Medium box (1x1) */
         .card-case-study {
-            grid-column: span 1;
-            grid-row: span 1;
+            /* Remains in the last column, row 1 */
+            grid-column: 4 / span 1;
+            grid-row: 1 / span 1;
         }
 
-        /* Card 5 (Hobby): Small box (1x1) - Fills the gap next to Tech Stack */
+        /* Card 5 (Hobby): Small box (1x1) */
         .card-hobby {
-            grid-column: span 1;
-            grid-row: span 1;
+            /* Remains in the last column, row 2 */
+            grid-column: 4 / span 1;
+            grid-row: 2 / span 1;
+        }
+
+        /* Card 7 (Reflection): New Card (1x1) - Placed below Case Study, next to Hobby */
+        .card-reflection {
+             /* Positioned in row 3, columns 1 and 2 */
+            grid-column: 1 / span 2;
+            grid-row: 3 / span 1;
+            background-color: var(--color-light-grey);
+            border: 1px solid var(--color-accent);
+        }
+        .card-reflection p {
+            font-style: italic;
         }
 
         /* Card 6 (Playlist): Wide box (4x1) */
         .card-playlist {
-            grid-column: span 4;
+            /* Now spans below the main content */
+            grid-column: 3 / span 2;
+            grid-row: 3 / span 1;
             display: flex;
             align-items: center;
+            /* Removing padding from card-playlist to fit the iframe better */
+            padding: 10px;
         }
         .playlist-content {
             width: 100%;
             text-align: center;
-            padding: 10px 0;
         }
-
+        
         /* Utility for list items */
         .list-unstyled {
             list-style: none;
@@ -178,15 +224,16 @@
                 padding: 10px;
             }
 
-            /* All cards should span the full width (1 column) on mobile */
+            /* All cards should span the full width (1 column) on mobile and revert to auto height */
             .bento-card {
                 grid-column: span 1 !important;
                 grid-row: span 1 !important;
-                min-height: 120px; /* Ensure some vertical space */
+                min-height: 120px; 
             }
 
+            /* Remove explicit height on mobile if the content is long */
             .card-profile {
-                min-height: 200px;
+                 min-height: 200px;
             }
 
             .profile-name {
@@ -208,11 +255,11 @@
                 </p>
             </div>
             <div class="social-links">
-                <span class="card-title" style="margin-bottom: 10px;">Connect</span>
+                <span class="card-title" style="margin-bottom: 10px; color: var(--color-white);">Connect</span>
                 <p>
-                    <a href="#">LinkedIn</a>
-                    <a href="#">GitHub</a>
-                    <a href="#">UMT Portal</a>
+                    <a href="#" target="_blank">LinkedIn</a>
+                    <a href="#" target="_blank">GitHub</a>
+                    <a href="#" target="_blank">UMT Portal</a>
                 </p>
             </div>
         </div>
@@ -220,7 +267,7 @@
         <div class="bento-card card-location">
             <span class="card-subtitle">Current Location & Time</span>
             <h2 class="card-title">UMT, Kuala Nerus</h2>
-            <p>14:47 MYT</p>
+            <p>4:40 PM MYT</p>
         </div>
 
         <div class="bento-card card-subjects">
@@ -234,27 +281,24 @@
             </ul>
         </div>
 
+        <div class="bento-card card-case-study">
+            <span class="card-subtitle">Research Highlight</span>
+            <h2 class="card-title">Starch Gelatinization in Local Kuih</h2>
+            <p>Analyzing the texture profiles of **Kuih Lapis** through Differential Scanning Calorimetry (DSC).</p>
+        </div>
+
         <div class="bento-card card-hobby">
             <span class="card-subtitle">Downtime Activity</span>
             <h2 class="card-title">Campus Life</h2>
             <p>Evening walks at **Pantai UMT** – a great way to clear the mind.</p>
         </div>
 
-        <div class="bento-card card-case-study">
-            <span class="card-subtitle">Research Highlight</span>
-            <h2 class="card-title">Starch Gelatinization in Local Kuih</h2>
-            <p>Analyzing the texture profiles of **Kuih Lapis** through Differential Scanning Calorimetry (DSC).</p>
+        <div class="bento-card card-reflection">
+            <span class="card-subtitle">Personal Vision</span>
+            <h2 class="card-title">Why Food Tech Matters in Malaysia</h2>
+            <p>Sustainable food security is crucial for our future. By optimizing local processing methods, we can reduce waste and improve nutrition.</p>
         </div>
-        
+
         <div class="bento-card card-playlist">
-            <div class="playlist-content">
-                <span class="card-subtitle">Study Soundtrack</span>
-                <h2 class="card-title">Deep Focus Playlist</h2>
-                <p>Embed a music player widget here.</p>
-            </div>
-        </div>
-
-    </div>
-
-</body>
-</html>
+           <iframe style="border-radius:12px" 
+src="
